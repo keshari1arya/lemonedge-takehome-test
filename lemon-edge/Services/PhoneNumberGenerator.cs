@@ -1,47 +1,55 @@
+using lemon_edge.lib.Models;
+using lemon_edge.lib.Validation;
 using lemon_edge.Models;
-using lemon_edge.Services.Maneuvers;
-using lemon_edge.Services.Validators;
-public class PhoneNumberGenerator
+
+namespace lemon_edge;
+public class PhoneNumberGenerator(
+    IKeypad _keypad,
+    Maneuver maneuver,
+    int phoneNumberLength,
+    List<IValidationRule> _startValidationRules = null,
+    List<IValidationRule> _maneuverValidationRules = null)
 {
-    private readonly IKeypad _keypad;
-    private readonly int _phoneNumberLength;
-    private readonly IEnumerable<IStartValidationRule>? _startValidationRules;
-    private readonly IEnumerable<IManeuverValidationRule>? _maneuverValidationRules;
-
-    public PhoneNumberGenerator(IKeypad keypad, int phoneNumberLength)
+    private int numberCount = 0;
+    public int CountValidPhoneNumbers()
     {
-        _keypad = keypad;
-        _phoneNumberLength = phoneNumberLength;
-
-        _startValidationRules = new List<IStartValidationRule>(){
-            new NoZeroOrOneStartRule()
-        };
-
-        _maneuverValidationRules = new List<IManeuverValidationRule>(){
-            new NoSpecialKeysRule()
-        };
-    }
-
-    public void GenerateAndPrintValidPhoneNumbers()
-    {
-
-        foreach (var maneuverName in ManeuverType.All())
+        for (int i = 0; i < _keypad.RowCount; i++)
         {
-            BaseManeuver validator = CreateManeuver(maneuverName);
-            int count = validator.CalculateTotalValidNumbers();
-            Console.WriteLine($"{maneuverName}: {count} valid phone numbers");
+            for (int j = 0; j < _keypad.ColumnCount; j++)
+            {
+                var position = new Position(i, j);
+
+                if (_startValidationRules?.All(x => x.IsValid(_keypad.GetKey(position))) == true)
+                {
+                    CalculatePhoneNumberCount(maneuver, position, 1);
+                }
+            }
         }
+
+        return numberCount;
     }
 
-    private BaseManeuver CreateManeuver(string name)
+    private void CalculatePhoneNumberCount(Maneuver maneuver, Position position, int startCount)
     {
-        return name switch
+        foreach (var rule in _maneuverValidationRules)
         {
-            ManeuverType.Rook => new RookManeuver(_keypad, _phoneNumberLength, _startValidationRules, _maneuverValidationRules),
-            ManeuverType.Bishop => new BishopManeuver(_keypad, _phoneNumberLength, _startValidationRules, _maneuverValidationRules),
-            ManeuverType.Queen => new QueenManeuver(_keypad, _phoneNumberLength, _startValidationRules, _maneuverValidationRules),
-            ManeuverType.Knight => new KnightManeuver(_keypad, _phoneNumberLength, _startValidationRules, _maneuverValidationRules),
-            _ => throw new NotSupportedException($"Validator for {name} is not implemented")
-        };
+            if (!rule.IsValid(_keypad.GetKey(position)))
+            {
+                return;
+            }
+        }
+
+        if (startCount == phoneNumberLength)
+        {
+            numberCount++;
+            return;
+        }
+
+        var possibleManueverPositions = maneuver.GetManueverablePositions(position, _keypad);
+
+        foreach (var pos in possibleManueverPositions)
+        {
+            CalculatePhoneNumberCount(maneuver, pos, startCount + 1);
+        }
     }
 }

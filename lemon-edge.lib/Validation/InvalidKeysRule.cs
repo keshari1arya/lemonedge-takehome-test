@@ -1,6 +1,8 @@
-namespace lemon_edge.Services.Validators;
+using lemon_edge.lib.Validation;
 
-public class NoSpecialKeysRule : IManeuverValidationRule
+namespace lemon_edge.lib.Validation;
+
+public class InvalidKeysRule(char[] invalidKeys) : IValidationRule
 {
     /// <summary>
     /// Checks if the key is valid for the maneuver.
@@ -9,6 +11,6 @@ public class NoSpecialKeysRule : IManeuverValidationRule
     /// <returns></returns>
     public bool IsValid(char key)
     {
-        return key != '*' && key != '#';
+        return !invalidKeys.Contains(key);
     }
 }

@@ -1,6 +1,8 @@
-namespace lemon_edge.Services.Validators;
+using lemon_edge.lib.Validation;
 
-public class NoZeroOrOneStartRule : IStartValidationRule
+namespace lemon_edge.lib.Validation;
+
+public class ValidStartKeyRule(char[] validStartKeys) : IValidationRule
 {
     /// <summary>
     /// Checks if the key is valid for the start.
@@ -9,6 +11,6 @@ public class NoZeroOrOneStartRule : IStartValidationRule
     /// <returns></returns>
     public bool IsValid(char key)
     {
-        return key != '0' && key != '1';
+        return validStartKeys.Contains(key);
     }
 }

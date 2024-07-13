@@ -1,4 +1,4 @@
-namespace lemon_edge.Models;
+namespace lemon_edge.lib.Models;
 public interface IKeypad
 {
     /// <summary>
@@ -8,4 +8,6 @@ public interface IKeypad
 
     int RowCount { get; }
     int ColumnCount { get; }
+
+    char GetKey(Position position);
 }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lemon-edge", "lemon-edge\le
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lemon-edge.test", "lemon-edge.test\lemon-edge.test.csproj", "{DCF162BC-3312-4913-AF1D-BC10B173FD4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lemon-edge.lib", "lemon-edge.lib\lemon-edge.lib.csproj", "{F723F340-60BC-44A9-82E7-BD030E757732}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{DCF162BC-3312-4913-AF1D-BC10B173FD4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCF162BC-3312-4913-AF1D-BC10B173FD4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCF162BC-3312-4913-AF1D-BC10B173FD4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F723F340-60BC-44A9-82E7-BD030E757732}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F723F340-60BC-44A9-82E7-BD030E757732}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F723F340-60BC-44A9-82E7-BD030E757732}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F723F340-60BC-44A9-82E7-BD030E757732}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

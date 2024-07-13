@@ -1,3 +1,5 @@
+using lemon_edge.lib.Models;
+
 namespace lemon_edge.Models;
 
 public class StandardPhoneKeypad : IKeypad
@@ -19,5 +21,10 @@ public class StandardPhoneKeypad : IKeypad
 
         RowCount = Layout.GetLength(0);
         ColumnCount = Layout.GetLength(1);
+    }
+
+    public char GetKey(Position position)
+    {
+        return Layout[position.Row, position.Column];
     }
 }
