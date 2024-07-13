@@ -74,7 +74,7 @@
 
       // Assert
       Assert.AreEqual(2341, count);
-      Assert.IsFalse(validNumbers.All(x => maneuver.ValidPhoneNumbers.Contains(x)));   //  <-------------------------------------
+      Assert.IsFalse(validNumbers.Any(x => maneuver.ValidPhoneNumbers.Contains(x)));   //  <-------------------------------------
   }
   ```
 
