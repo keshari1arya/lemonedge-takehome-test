@@ -1,4 +1,4 @@
-using lemon_edge.lib.Validation;
+using lemon_edge.lib.Interfaces;
 
 namespace lemon_edge.lib.Validation;
 

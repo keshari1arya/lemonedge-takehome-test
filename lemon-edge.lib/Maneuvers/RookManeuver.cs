@@ -1,8 +1,11 @@
-namespace lemon_edge.lib.Models;
+using lemon_edge.lib.Interfaces;
+using lemon_edge.lib.Models;
 
-public class RookManeuver : Maneuver
+namespace lemon_edge.lib.Maneuvers;
+
+public class RookManeuver : BaseManeuver
 {
-    public override IEnumerable<Position> GetManueverablePositions(Position from, IKeypad keypad)
+    public override IEnumerable<Position> GetManueverablePositions(Position from, IKeypad keypad, IEnumerable<IPositionValidationRule>? validationRules = null)
     {
         var possibleManueverPositions = new List<Position>();
 
@@ -10,40 +13,28 @@ public class RookManeuver : Maneuver
         for (int i = 1; i < keypad.ColumnCount; i++)
         {
             var position = new Position(from.Row, from.Column - i);
-            if (IsValidPosition(keypad, position))
-            {
-                possibleManueverPositions.Add(position);
-            }
+            ValidateAndAddPositionToManeuverablePositions(keypad, position, possibleManueverPositions, validationRules);
         }
 
         // for right maneuver
         for (int i = 1; i < keypad.ColumnCount; i++)
         {
             var position = new Position(from.Row, from.Column + i);
-            if (IsValidPosition(keypad, position))
-            {
-                possibleManueverPositions.Add(position);
-            }
+            ValidateAndAddPositionToManeuverablePositions(keypad, position, possibleManueverPositions, validationRules);
         }
 
         // for up maneuver
         for (int i = 1; i < keypad.RowCount; i++)
         {
             var position = new Position(from.Row - i, from.Column);
-            if (IsValidPosition(keypad, position))
-            {
-                possibleManueverPositions.Add(position);
-            }
+            ValidateAndAddPositionToManeuverablePositions(keypad, position, possibleManueverPositions, validationRules);
         }
 
         // for down maneuver
         for (int i = 1; i < keypad.RowCount; i++)
         {
             var position = new Position(from.Row + i, from.Column);
-            if (IsValidPosition(keypad, position))
-            {
-                possibleManueverPositions.Add(position);
-            }
+            ValidateAndAddPositionToManeuverablePositions(keypad, position, possibleManueverPositions, validationRules);
         }
 
         return possibleManueverPositions;

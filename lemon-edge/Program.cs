@@ -1,5 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using lemon_edge;
+using lemon_edge.lib.Interfaces;
+using lemon_edge.lib.Maneuvers;
 using lemon_edge.lib.Models;
 using lemon_edge.lib.Validation;
 using lemon_edge.Models;
@@ -18,9 +20,11 @@ var maneuverValidators = new List<IValidationRule>
    new InvalidKeysRule(['#','*']),
 };
 
+var positionValidationRule = new List<IPositionValidationRule> { };
+
 var phoneNumberLength = 7;
 
-PhoneNumberGenerator generator = new(keypad, rook, phoneNumberLength, startValidators, maneuverValidators);
+PhoneNumberGenerator generator = new(keypad, rook, phoneNumberLength, null, startValidators, maneuverValidators);
 
 var count = generator.CountValidPhoneNumbers();
 
