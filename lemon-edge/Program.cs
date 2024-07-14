@@ -4,11 +4,12 @@ using lemon_edge.lib.Interfaces;
 using lemon_edge.lib.Maneuvers;
 using lemon_edge.lib.Models;
 using lemon_edge.lib.Validation;
+using lemon_edge.Maneuvers;
 using lemon_edge.Models;
 
 
 var keypad = new StandardPhoneKeypad();
-var rook = new RookManeuver();
+var phoneNumberLength = 7;
 
 var startValidators = new List<IValidationRule>
 {
@@ -22,10 +23,14 @@ var maneuverValidators = new List<IValidationRule>
 
 var positionValidationRule = new List<IPositionValidationRule> { };
 
-var phoneNumberLength = 7;
 
-PhoneNumberGenerator generator = new(keypad, rook, phoneNumberLength, null, startValidators, maneuverValidators);
+PhoneNumberGenerator generator = new(keypad, phoneNumberLength, startValidators, maneuverValidators);
 
-var count = generator.CountValidPhoneNumbers();
+var bishop = new BishopManeuver();
+Console.WriteLine("Bishop: " + generator.CountValidPhoneNumbers(bishop));
 
-Console.WriteLine(count);
+var rook = new RookManeuver();
+Console.WriteLine("Rook: " + generator.CountValidPhoneNumbers(rook));
+
+var king = new KingManeuver();
+Console.WriteLine("King: " + generator.CountValidPhoneNumbers(king));

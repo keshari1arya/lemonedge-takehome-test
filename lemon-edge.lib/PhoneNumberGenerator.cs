@@ -1,19 +1,27 @@
 using lemon_edge.lib.Interfaces;
 using lemon_edge.lib.Models;
-using lemon_edge.lib.Validation;
 
 namespace lemon_edge;
+/// <summary>
+/// Generates valid phone numbers
+/// </summary>
+/// <param name="_keypad"></param>
+/// <param name="_phoneNumberLength"></param>
+/// <param name="_positionValidationRules"></param>
+/// <param name="_startValidationRules"></param>
+/// <param name="_maneuverValidationRules"></param>
 public class PhoneNumberGenerator(
     IKeypad _keypad,
-    BaseManeuver maneuver,
-    int phoneNumberLength,
-    IEnumerable<IPositionValidationRule>? _manueverPositionValidationRules = null,
+    int _phoneNumberLength,
     List<IValidationRule>? _startValidationRules = null,
-    List<IValidationRule>? _maneuverValidationRules = null)
+    List<IValidationRule>? _maneuverValidationRules = null,
+    IEnumerable<IPositionValidationRule>? _positionValidationRules = null)
 {
-    private int numberCount = 0;
-    public int CountValidPhoneNumbers()
+    private int validPhoneNumberCount;
+
+    public int CountValidPhoneNumbers(BaseManeuver maneuver)
     {
+        validPhoneNumberCount = 0;
         for (int i = 0; i < _keypad.RowCount; i++)
         {
             for (int j = 0; j < _keypad.ColumnCount; j++)
@@ -27,7 +35,7 @@ public class PhoneNumberGenerator(
             }
         }
 
-        return numberCount;
+        return validPhoneNumberCount;
     }
 
     private void DialAndCount(BaseManeuver maneuver, Position position, int startCount)
@@ -43,13 +51,13 @@ public class PhoneNumberGenerator(
             }
         }
 
-        if (startCount == phoneNumberLength)
+        if (startCount == _phoneNumberLength)
         {
-            numberCount++;
+            validPhoneNumberCount++;
             return;
         }
 
-        var possibleManueverPositions = maneuver.GetManueverablePositions(position, _keypad, _manueverPositionValidationRules);
+        var possibleManueverPositions = maneuver.GetManueverablePositions(position, _keypad, _positionValidationRules);
 
         foreach (var pos in possibleManueverPositions)
         {

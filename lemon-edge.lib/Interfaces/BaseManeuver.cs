@@ -10,7 +10,7 @@ public abstract class BaseManeuver
     /// </summary>
     /// <param name="from">Then position to start from.</param>
     /// <param name="validationRules">Add validation rules for the position. No need to add Position out of bounds of the board as it is checked by default.</param>
-    /// <param name="validationRules"></param>
+    /// <param name="validationRules">To validate the position.</param>
     /// <returns></returns>
     public abstract IEnumerable<Position> GetManueverablePositions(Position from, IKeypad keypad, IEnumerable<IPositionValidationRule>? validationRules = null);
 
