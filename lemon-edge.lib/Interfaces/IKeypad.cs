@@ -1,4 +1,6 @@
-namespace lemon_edge.lib.Models;
+using lemon_edge.lib.Models;
+
+namespace lemon_edge.lib.Interfaces;
 public interface IKeypad
 {
     /// <summary>

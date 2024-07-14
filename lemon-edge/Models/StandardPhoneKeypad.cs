@@ -1,3 +1,4 @@
+using lemon_edge.lib.Interfaces;
 using lemon_edge.lib.Models;
 
 namespace lemon_edge.Models;
